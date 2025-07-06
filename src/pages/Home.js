@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import supabase from "../config/SupabaseClient";
+import SmoothyCard from "../components/SmoothyCard";
 
 const Home = () => {
   const [smoothies, setSmoothies] = useState(null);
@@ -30,10 +31,12 @@ const Home = () => {
       {error && <p>{error}</p>}
 
       {smoothies && (
-        <div>
+        <div className="smoothies">
+        <div className="smoothie-grid">
           {smoothies.map((smoothie) => (
-            <p key={smoothie.id}>{smoothie.title}</p>
+            <SmoothyCard key={smoothie.id} smoothie={smoothie} />
           ))}
+        </div>
         </div>
       )}
     </div>
