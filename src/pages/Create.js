@@ -1,11 +1,13 @@
 import { useState } from "react";
 import supabase from "../config/SupabaseClient";
 import { useNavigate } from "react-router-dom";
+import ImageUploader from "../components/ImageUploader";
 
 const Create = () => {
   const [title, setTitle] = useState();
   const [method, setMethod] = useState();
   const [rating, setRating] = useState();
+  const [image, setImage] = useState([]);
 
   const [formError, setFormError] = useState();
 
@@ -23,7 +25,7 @@ const Create = () => {
     const { data, error } = await supabase
       .from("Smoothies")
       .insert([{ title, method, rating }])
-      .select()
+      .select();
 
     if (error) {
       setFormError("Please fill all the fields");
@@ -32,7 +34,7 @@ const Create = () => {
     if (data) {
       console.log(data);
       setFormError(null);
-      navigate('/');
+      navigate("/");
     }
   };
   return (
@@ -61,6 +63,12 @@ const Create = () => {
           value={rating}
           onChange={(e) => setRating(e.target.value)}
         />
+
+        <ImageUploader onUpload={(url) => setImage((prev) => [...prev, url])} />
+
+        {image.map((img, index) => (
+          <img key={index} src={img} alt="Smoothie" style={{ width: 200 }} />
+        ))}
 
         <button>Create smoothie</button>
 
