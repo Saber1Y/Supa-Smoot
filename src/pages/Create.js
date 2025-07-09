@@ -66,9 +66,21 @@ const Create = () => {
 
         <ImageUploader onUpload={(url) => setImage((prev) => [...prev, url])} />
 
-        {image.map((img, index) => (
-          <img key={index} src={img} alt="Smoothie" style={{ width: 200 }} />
-        ))}
+        {image.length > 0 && (
+          <div>
+            <h3>Uploaded Images:</h3>
+            <div className="image-gallery">
+              {image.map((imgUrl, index) => (
+                <img
+                  key={index}
+                  src={imgUrl}
+                  alt={'smoothie'}
+                  style={{ width: 200, margin: 10 }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         <button>Create smoothie</button>
 
